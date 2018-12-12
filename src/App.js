@@ -14,10 +14,10 @@ class App extends Component {
 
   componentWillMount() {
     const session = this.userSession
-    if(!session.isUserSignedIn() && session.isSignInPending()) {
+    if (!session.isUserSignedIn() && session.isSignInPending()) {
       session.handlePendingSignIn()
       .then((userData) => {
-        if(!userData.username) {
+        if (!userData.username) {
           throw new Error('This app requires a username.')
         }
         window.location = `/kingdom/${userData.username}`
@@ -26,13 +26,10 @@ class App extends Component {
   }
 
   render() {
+    const isSignedIn = this.userSession.isUserSignedIn();
     return (
       <main role="main">
-          {this.userSession.isUserSignedIn() ?
-            <SignedIn />
-          :
-            <Landing />
-          }
+          { isSignedIn ? <SignedIn /> : <Landing /> }
       </main>
     );
   }
